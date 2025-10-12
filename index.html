@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Заметки</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="main.js" defer></script>
+</head>
+<body>
+
+    <h1 class="title">Мои заметки <span class="title__counter">0</span></h1>
+
+    <div class="notes"></div>
+
+    <form class="addnote">
+        <input type="text" name="note-caption" id="note-caption" placeholder="Название">
+        <textarea name="note-text" id="note-text" placeholder="Текст заметки"></textarea>
+        <fieldset class="addnote__color">
+            <div class="square-radio">
+                <input type="radio" name="note-color" id="yell" value="yell" checked>
+                <label for="yell" class="yell"></label>
+            </div>
+            <div class="square-radio">
+                <input type="radio" name="note-color" id="pink" value="pink">
+                <label for="pink" class="pink"></label>
+            </div>
+            <div class="square-radio">
+                <input type="radio" name="note-color" id="blue" value="blue">
+                <label for="blue" class="blue"></label>
+            </div>
+        </fieldset>
+        <input type="submit" value="Добавить заметку">
+    </form>
+
+    <div class="success-message">✅ Заметка добавлена</div>
+
+    
+
+
+    
+</body>
+</html>

@@ -1,0 +1,209 @@
+:root {
+    --note-yell: #fafad2;
+    --note-pink: #ffb6c1;
+    --note-blue: #87cefa;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 15px;
+    padding: 40px 32px;
+}
+
+body {
+    position: relative;
+}
+
+.title__counter {
+    color: rgb(207, 207, 207);
+}
+
+.notes {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 340px);
+    grid-auto-rows: 360px;
+    gap: 10px;
+    margin: 40px 0;
+}
+
+.note {
+    position: relative;
+    background-color: var(--note-yell);
+    font-size: 15px;
+    padding: 2em;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+
+    & .note__title {
+        font-size: 1.3em;
+        line-height: 100%;
+        margin: 0.75em 0;
+        user-select: none;
+    }
+
+    & .note__text {
+        margin: 0;
+        padding: 0;
+        max-height: 210px;
+        overflow-x: auto;
+    }
+
+    & .note__date {
+        margin-top: auto;
+        color: rgb(104, 104, 104);
+    }
+
+    & .note__delete-btn {
+        position: absolute;
+        top: 16px;
+        right: 16px;
+        border: none;
+        outline: none;
+        appearance: none;
+        cursor: pointer;
+        padding: 0;
+        background-color: transparent;
+        font-size: 20px;
+        color: crimson;
+    }
+}
+
+.note.fadein {
+    animation: fadeInNote 1s ease-in;
+}
+
+.addnote {
+    display: flex;
+    flex-direction: column;
+    max-width: 500px;
+    background-color:rgb(242, 242, 242);
+    padding: 25px;
+    border-radius: 10px;
+
+    fieldset {
+        border: none;
+        padding: 15px 0;
+        display: flex;
+        gap: 8px;
+    }
+
+    input[type="text"] {
+        margin-bottom: 12px;
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 1rem;
+        padding: 0.5em;
+        border: 1px solid rgb(232, 232, 232);
+        border-radius: 4px;
+        height: 30px;
+    }
+
+    textarea {
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 1rem;
+        padding: 0.5em;
+        resize: none;
+        border: 1px solid rgb(232, 232, 232);
+        height: 100px;
+        border-radius: 4px;
+    }
+
+    input[type="text"]::placeholder,
+    textarea::placeholder {
+        color: rgb(179, 179, 179);
+    }
+
+    & .square-radio {
+        position: relative;
+        width: 40px;
+        height: 40px;
+        cursor: pointer;
+        border-radius: 4px;
+
+        input[type="radio"],
+        label {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            margin: 0;
+        }
+
+        input[type="radio"] {
+            visibility: hidden;
+        }
+
+        input[type="radio"]:checked + label {
+            border: 1px solid rgb(27, 68, 129);
+        }
+
+        label.yell {
+            background-color: var(--note-yell);
+        }
+
+        label.pink {
+            background-color: var(--note-pink);
+        }
+
+        label.blue {
+            background-color: var(--note-blue);
+        }
+
+        label {
+            border-radius: 4px;
+        }
+
+        
+    }
+
+    input[type="submit"] {
+        border: none;
+        outline: none;
+        appearance: none;
+        cursor: pointer;
+        width: 170px;
+        padding: 12px 0;
+        background-color: rgb(27, 68, 129);
+        color: white;
+        margin-top: 24px;
+        border-radius: 6px;
+    }
+
+    
+}
+
+.success-message {
+    background-color: rgba(0, 0, 0, 0.2);
+    padding: 24px;
+    border-radius: 12px;
+    position: absolute;
+    bottom: 10%;
+    left: 50%;
+    transform: translateX(-50%);
+    opacity: 0;
+}
+
+.success-message.show {
+    animation: fadeOutSuccess 3s ease-in;
+}
+
+@keyframes fadeOutSuccess {
+    from {
+        opacity: 1;
+    }
+
+    to {
+        opacity: 0;
+    }
+}
+
+@keyframes fadeInNote {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
