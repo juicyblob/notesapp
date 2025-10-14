@@ -17,7 +17,20 @@ function getKeysForNotes() {
         keysArr.push(localStorage.key(i));
     }
     return keysArr.sort((a, b) => { return a.localeCompare(b, undefined, { numeric: true})} );
-} 
+}
+
+function createNote(title, text, date, bgColor) {
+    let div = document.createElement('div');
+    div.className = 'note';
+    div.dataset.id = key;
+    div.style.backgroundColor = `var(${bgColor})`;
+    div.insertAdjacentHTML('afterbegin', 
+    `<h3 class="note__title">${title}</h3>
+    <p class="note__text">${text}</p>
+    <span class="note__date">${date}</span>
+    <button class="note__delete-btn">x</button>`);
+    notes.append(div);
+}
 
 
 function showNotes(hasNew) {
@@ -30,16 +43,7 @@ function showNotes(hasNew) {
         notes.replaceChildren();
         for (let key of sortKeys) {
             let note = JSON.parse(localStorage.getItem(key));
-            let div = document.createElement('div');
-            div.className = 'note';
-            div.dataset.id = key;
-            div.style.backgroundColor = `var(${note.bgcolor})`;
-            div.insertAdjacentHTML('afterbegin', 
-            `<h3 class="note__title">${note.caption}</h3>
-            <p class="note__text">${note.text}</p>
-            <span class="note__date">${note.date}</span>
-            <button class="note__delete-btn">x</button>`);
-            notes.append(div);
+            createNote(note.caption, note.text, note.date, note.bgcolor);
         }
         if (hasNew) {
             notes.lastElementChild.classList.add('fadein');
