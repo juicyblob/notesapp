@@ -67,6 +67,27 @@ body {
     }
 }
 
+.note__empty {
+    background-color:rgb(242, 242, 242);
+    border-radius: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+
+    & .note__empty-round {
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        background-color: rgb(231, 229, 229);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 5rem;
+        color: rgb(242, 242, 242);
+    }
+}
+
 .note.fadein {
     animation: fadeInNote 1s ease-in;
 }
