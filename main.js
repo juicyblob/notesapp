@@ -12,6 +12,7 @@ function updateCounter() {
 updateCounter();
 
 function getKeysForNotes() {
+    if (localStorage.length == 0) return 'note0';
     let keysArr = [];
     for (let i = 0; i < localStorage.length; i++) {
         keysArr.push(localStorage.key(i));
@@ -19,10 +20,10 @@ function getKeysForNotes() {
     return keysArr.sort((a, b) => { return a.localeCompare(b, undefined, { numeric: true})} );
 }
 
-function createNote(title, text, date, bgColor) {
+function createNote(title, text, date, bgColor, dataId) {
     let div = document.createElement('div');
     div.className = 'note';
-    div.dataset.id = key;
+    div.dataset.id = dataId;
     div.style.backgroundColor = `var(${bgColor})`;
     div.insertAdjacentHTML('afterbegin', 
     `<h3 class="note__title">${title}</h3>
@@ -43,7 +44,7 @@ function showNotes(hasNew) {
         notes.replaceChildren();
         for (let key of sortKeys) {
             let note = JSON.parse(localStorage.getItem(key));
-            createNote(note.caption, note.text, note.date, note.bgcolor);
+            createNote(note.caption, note.text, note.date, note.bgcolor, key);
         }
         if (hasNew) {
             notes.lastElementChild.classList.add('fadein');
