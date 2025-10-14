@@ -4,18 +4,33 @@ let notesTotal = document.querySelector('.title__counter');
 let notes = document.querySelector('.notes');
 let form = document.querySelector('.addnote');
 let success = document.querySelector('.success-message');
+let firstVisit;
+function checkFirstVisit() {
+    if (!localStorage.getItem('firstVisit')) {
+        localStorage.setItem('firstVisit', true);
+        firstVisit = true;
+    } else {
+        localStorage.setItem('firstVisit', false);
+        firstVisit = false;
+    }
+}
+checkFirstVisit();
+
+
 
 function updateCounter() {
-    notesTotal.textContent = localStorage.length;
+    notesTotal.textContent = localStorage.length - 1;
 }
 
 updateCounter();
 
 function getKeysForNotes() {
-    if (localStorage.length == 0) return 'note0';
+    if (localStorage.length == 1) return 'note0';
     let keysArr = [];
     for (let i = 0; i < localStorage.length; i++) {
-        keysArr.push(localStorage.key(i));
+        if (localStorage.key(i).includes('note')) {
+            keysArr.push(localStorage.key(i));
+        }   
     }
     return keysArr.sort((a, b) => { return a.localeCompare(b, undefined, { numeric: true})} );
 }
@@ -35,20 +50,40 @@ function createNote(title, text, date, bgColor, dataId) {
 
 
 function showNotes(hasNew) {
-    if (localStorage.length != 0) {
-        let keysArr = [];
-        for (let i = 0; i < localStorage.length; i++) {
-            keysArr.push(localStorage.key(i));
-        }
-        let sortKeys = getKeysForNotes();
+    function getNotes() {
+        let keys = getKeysForNotes();
         notes.replaceChildren();
-        for (let key of sortKeys) {
+        for (let key of keys) {
             let note = JSON.parse(localStorage.getItem(key));
             createNote(note.caption, note.text, note.date, note.bgcolor, key);
         }
+    }
+    if (localStorage.length > 1) {
+        getNotes();
         if (hasNew) {
             notes.lastElementChild.classList.add('fadein');
             setTimeout(() => notes.lastElementChild.classList.remove('fadein'), 1400);
+        }
+    } else {
+        if (firstVisit) {
+            let exampleData = {
+                title: ['Купить продукты', 'Позвонить маме', 'Записаться к врачу'],
+                text: [
+                    'Белый хлеб (2шт.) 🍞<br>2 бутылки молока 🍼<br>Киллограм бананов 🍌<br>Пачку сливочного масла 🧈',
+                    'В 18:00 ⏱️ позвонить маме и узнать будет ли она праздновать с нами новый год.🎄',
+                    'Записаться к терапевту на прием. 👨🏽‍⚕️'
+                ],
+                color: ['yell', 'pink', 'blue']
+            };
+            for (let i = 0; i < Object.values(exampleData).length; i++) {
+                let args = [];
+                for (let value of Object.values(exampleData)) {
+                    args.push(value[i]);
+                }
+                addNote(...args);
+            }
+            updateCounter();
+            getNotes();
         }
     }
 }
