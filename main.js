@@ -82,9 +82,12 @@ function showNotes(hasNew) {
                 }
                 addNote(...args);
             }
-            updateCounter();
             getNotes();
+        } else {
+            notes.replaceChildren();
+            addEmptyNote();
         }
+        updateCounter();
     }
 }
 
@@ -145,3 +148,19 @@ notes.addEventListener('click', function(e) {
     removeNote(e.target);
     
 });
+
+function addEmptyNote() {
+    let div = document.createElement('div');
+    div.className = 'note__empty';
+    div.insertAdjacentHTML('afterbegin', '<div class="note__empty-round">+</div>');
+    notes.append(div);
+    
+    function handlerClick() {
+        form.scrollIntoView({
+            behavior: 'smooth'
+        });
+        form.elements['note-caption'].focus();
+    }
+
+    div.addEventListener('click', handlerClick);
+}
